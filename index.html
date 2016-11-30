@@ -45,12 +45,13 @@
                 <ul class="nav navbar-nav navbar-left">
                     <li><a href="#" id="next">Next</a></li>
                 </ul>
-                <form class="navbar-form navbar-left" action="#" onsubmit="save()">
+                <div class="navbar-form navbar-left">
                     <div class="form-group">
                         <input type="text" id="name" class="form-control" placeholder="Board Name">
                     </div>
-                    <button type="submit" class="btn btn-default">Save</button>
-                </form>
+                    <button id="save" class="btn btn-default">Save</button>
+                    <button id="jump" class="btn btn-default">Jump</button>
+                </div>
 
                 <ul class="nav navbar-nav navbar-right">
                     <li><a href="#" id="clear">Clear</a></li>
@@ -60,13 +61,6 @@
                         </ul>
                     </li>
                 </ul>
-
-                <form class="navbar-form navbar-right" action="#" onsubmit="jump()">
-                    <div class="form-group">
-                        <input type="text" id="jname" class="form-control" placeholder="Board to jump to">
-                    </div>
-                    <button type="submit" class="btn btn-default">Jump</button>
-                </form>
             </div>
         </div>
     </nav>
@@ -81,7 +75,7 @@
         function init() {
 
             if (Cookies.get('confirm') == null) {
-                var conf = confirm("By using this website, you agree to the use of cookies to store the names of your saved boards. \nThis website is a faster way to find random boards on 8chan. \nClick 'Next' to go to the next board. \nType in a board name and click 'Save' to save that board for 24 hours. \nType in a board name and click 'Jump' to jump to that specific board. \nClick 'Clear' to clear the cookie and delete all saved boards.");
+                var conf = confirm("By using this website, you agree to the use of cookies to store the names of your saved boards. \nThis website is a faster way to find random boards on 8chan. \nClick 'Next' to go to the next board. \nType in a board name and click 'Save' to save that board for 24 hours. \nType in a board name and click 'Jump' to jump to that specific board. \nClick 'Clear' to clear the cookie and delete all saved boards. \nYou can also tap the Tilda or Grave Accent key to move to the next board. \nNote: After clicking on the 8chan page, you will have to click next for the tilda key to work again.");
 
                 if (conf == false) {
                     alert("To avoid storing cookies, Please exit the site now");
@@ -104,6 +98,10 @@
                 }
             }
         }
+        
+        $('#save').click(save);
+        
+        $('#jump').click(jump);
 
         function save() {
             var name = $("#name").val();
@@ -112,7 +110,7 @@
             Cookies.set('saved_boards', saves, {
                 expires: 1
             });
-            $("#name").val(" ");
+            $("#name").val("");
             $(".boards").html(" ");
             for (var i = 0; i < saves.length; i++) {
                 $(".boards").append(`<li>${saves[i]}</li>`);
@@ -120,10 +118,10 @@
         }
 
         function jump() {
-            var v = $('#jname').val();
+            var v = $('#name').val();
             var str = `https://8ch.net/${v}/`;
             $("iframe").attr('src', str);
-            $('#jname').val("");
+            $('#name').val("");
         }
 
         $("#next").click(function () {
@@ -134,6 +132,14 @@
         $("#clear").click(function () {
             Cookies.remove('saved_boards');
             location.reload();
+        });
+    </script>
+    <script>
+        $(document).keydown(function (event) {
+            var keycode = (event.keyCode ? event.keyCode : event.which);
+            if (keycode == 192) {
+                $("iframe").attr('src', 'https://8ch.net/random.php');
+            }
         });
     </script>
 </body>
