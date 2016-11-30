@@ -5,7 +5,7 @@
     <meta charset="utf-8">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
-    <title>ToInfinity</title>
+    <title>To Infinity</title>
     <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css" integrity="sha384-BVYiiSIFeK1dGmJRAkycuHAHRg32OmUcww7on3RYdg4Va+PmSTsz/K68vbdEjh4u" crossorigin="anonymous">
     <style>
         html {
@@ -38,7 +38,7 @@
         <div class="container-fluid">
             <div class="navbar-header">
                 <a class="navbar-brand" href="#">
-                    ToInfinity
+                    To Infinity
                 </a>
             </div>
             <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
@@ -53,7 +53,6 @@
                 </form>
 
                 <ul class="nav navbar-nav navbar-right">
-                    <li><a href="#" id="instruct">Instructions</a></li>
                     <li><a href="#" id="clear">Clear</a></li>
                     <li class="dropdown">
                         <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button" aria-haspopup="true" aria-expanded="false">Boards <span class="caret"></span></a>
@@ -79,11 +78,20 @@
     <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js" integrity="sha384-Tc5IQib027qvyjSMfHjOMaLkfuWVxZxUPnCJA7l2mCWNIpG9mGCD8wGNIcPD7Txa" crossorigin="anonymous"></script>
     <script src="https://cdn.rawgit.com/js-cookie/js-cookie/master/src/js.cookie.js"></script>
     <script>
-        $("#instruct").click(function () {
-            alert("This is an 8chan board finder. Click next to get the next board and click save to add the board name to the list \nNote: Saved boards clear after a day since the last time you clicked save.");
-        });
-
         function init() {
+
+            if (Cookies.get('confirm') == null) {
+                var conf = confirm("By using this website, you agree to the use of cookies to store the names of your saved boards. \nThis website is a faster way to find random boards on 8chan. \nClick 'Next' to go to the next board. \nType in a board name and click 'Save' to save that board for 24 hours. \nType in a board name and click 'Jump' to jump to that specific board. \nClick 'Clear' to clear the cookie and delete all saved boards.");
+
+                if (conf == false) {
+                    alert("To avoid storing cookies, Please exit the site now");
+                }
+            }
+
+            Cookies.set('confirm', 'true', {
+                expires: 365
+            });
+
             if (Cookies.get('saved_boards') == null) {
                 var array = new Array();
                 Cookies.set('saved_boards', array, {
@@ -104,7 +112,7 @@
             Cookies.set('saved_boards', saves, {
                 expires: 1
             });
-            $("#name").val("");
+            $("#name").val(" ");
             $(".boards").html(" ");
             for (var i = 0; i < saves.length; i++) {
                 $(".boards").append(`<li>${saves[i]}</li>`);
