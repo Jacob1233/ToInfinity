@@ -113,9 +113,9 @@
 
         function jump() {
         var v = $('#jname').val(" ");
-        var str = `https://8ch.net/${v}`;
+        var str = `https://8ch.net/${v}/index.html`;
         $("iframe").attr('src', str);
-        $('#jname').val();
+        $('#jname').val(" ");
         }
 
         $("#next").click(function () {
