@@ -37,6 +37,7 @@ function getHomePage() {
     element_iframe.attr('src', url_home);
 }
 
+
 function jumpToBoard() {
     element_iframe.attr('src', url_home + element_input.val());
     element_input.val('');
