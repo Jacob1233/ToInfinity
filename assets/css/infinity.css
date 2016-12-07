@@ -1,0 +1,19 @@
+    html {
+    height: 100%;
+    width: 100%;
+}
+
+body {
+    padding: 0;
+    background-color: #333;
+    height: 100%;
+}
+
+iframe {
+    margin: 52px 0px 0px 0px;
+    padding: 0;
+    width: 100%;
+    height: 93%;
+    border: 0;
+}
+
