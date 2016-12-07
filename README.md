@@ -1,6 +1,6 @@
 # ToInfinity
+Browse 8chan better
 
-This is an 8chan random board finder.
 https://jacob1233.github.io/ToInfinity/
 
 Tread carefully
